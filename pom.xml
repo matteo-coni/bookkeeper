@@ -121,6 +121,7 @@
 
     </sonar.coverage.jacoco.xmlReportPaths>
     <!-- dependencies -->
+    <pitest-maven-plugin.version>1.5.1</pitest-maven-plugin.version>
     <arquillian-cube.version>1.18.2</arquillian-cube.version>
     <arquillian-junit.version>1.6.0.Final</arquillian-junit.version>
     <codahale.metrics.version>3.0.1</codahale.metrics.version>
