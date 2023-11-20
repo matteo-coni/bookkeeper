@@ -226,6 +226,7 @@
   <!-- dependency definitions -->
   <dependencyManagement>
     <dependencies>
+
       <!-- provided dependencies -->
       <dependency>
         <groupId>com.github.spotbugs</groupId>
