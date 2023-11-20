@@ -2,14 +2,12 @@ package org.apache.bookkeeper.bookie.storage.ldb;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
-import io.netty.buffer.ByteBufUtil;
+
 import io.netty.buffer.UnpooledByteBufAllocator;
 import org.apache.bookkeeper.bookie.storage.ldb.entity.WriteCacheGetEntity;
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -43,11 +41,13 @@ public class WriteCacheGetTest {
 
     }
 
-    @AfterClass
-    public static void tearDown() throws Exception {
+    @After
+    public void tearDown() throws Exception {
         //writeCache.clear();
-        entry.release();
-        writeCache.close();
+        //entry.release();
+        //writeCache.close();
+        //writeCache.clear();
+        if (entry != null) entry.release();
 
     }
 

@@ -243,16 +243,16 @@ public class WriteCache implements Closeable {
                 sortedEntriesIdx += 4;
             });
 
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("iteration took {} ms", MathUtils.elapsedNanos(startTime) / 1e6);
-            }
+            }*/
             startTime = MathUtils.nowInNano();
 
             // Sort entries by (ledgerId, entryId) maintaining the 4 items groups
             ArrayGroupSort.sort(sortedEntries, 0, sortedEntriesIdx);
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("sorting {} ms", (MathUtils.elapsedNanos(startTime) / 1e6));
-            }
+            }*/
             startTime = MathUtils.nowInNano();
 
             ByteBuf[] entrySegments = new ByteBuf[segmentsCount];
@@ -273,9 +273,9 @@ public class WriteCache implements Closeable {
                 consumer.accept(ledgerId, entryId, entry);
             }
 
-            if (log.isDebugEnabled()) {
+            /*if (log.isDebugEnabled()) {
                 log.debug("entry log adding {} ms", MathUtils.elapsedNanos(startTime) / 1e6);
-            }
+            }*/
         } finally {
             sortedEntriesLock.unlock();
         }
@@ -307,5 +307,5 @@ public class WriteCache implements Closeable {
     private long[] sortedEntries;
     private int sortedEntriesIdx;
 
-    private static final Logger log = LoggerFactory.getLogger(WriteCache.class);
+    //private static final Logger log = LoggerFactory.getLogger(WriteCache.class);
 }
