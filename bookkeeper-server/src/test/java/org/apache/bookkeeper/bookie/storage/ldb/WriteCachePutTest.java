@@ -5,6 +5,7 @@ import io.netty.buffer.ByteBufAllocator;
 import io.netty.buffer.UnpooledByteBufAllocator;
 import org.apache.bookkeeper.bookie.storage.ldb.entity.WriteCacheGetEntity;
 import org.apache.bookkeeper.bookie.storage.ldb.entity.WriteCachePutEntity;
+import org.apache.bookkeeper.conf.ServerConfiguration;
 import org.junit.After;
 import org.junit.Assert;
 import org.junit.Before;
@@ -112,7 +113,7 @@ public class WriteCachePutTest {
             case INVALID:
 
                 entry = mock(ByteBuf.class);
-                when(entry.readableBytes()).thenThrow(new RuntimeException("invalid ByteBuf"));
+                when(entry.readableBytes()).thenThrow(new IllegalArgumentException("invalid ByteBuf"));
 
                 System.out.println("prova mock");
 
@@ -142,7 +143,7 @@ public class WriteCachePutTest {
 
     @Test
     public void putCache(){
-        boolean res;
+        boolean res = false;
         long size_before = 0;
         long size_after = 0;
 
@@ -158,9 +159,8 @@ public class WriteCachePutTest {
             Assert.assertTrue(res);
 
 
-        } catch (Exception e){
+        } catch (IllegalArgumentException | NullPointerException  e){
             e.printStackTrace();
-            res = false;
             Assert.assertEquals(size_before, size_after);
             Assert.assertFalse(res);
         }

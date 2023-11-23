@@ -30,6 +30,8 @@ import java.io.IOException;
 import java.util.concurrent.atomic.AtomicLong;
 import java.util.concurrent.atomic.LongAdder;
 import java.util.concurrent.locks.ReentrantLock;
+
+import org.apache.bookkeeper.bookie.Bookie;
 import org.apache.bookkeeper.common.util.MathUtils;
 import org.apache.bookkeeper.util.collections.ConcurrentLongHashSet;
 import org.apache.bookkeeper.util.collections.ConcurrentLongLongHashMap;

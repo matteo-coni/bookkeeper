@@ -404,7 +404,7 @@
             <version>${maven-surefire-plugin.version}</version>
             <configuration>
               <excludes>
-                <!-- Specifica il percorso della classe che desideri escludere dai test -->
+                <!-- Specifica il percorso della classe che desideri escludere dai test-->
                 <exclude>**/WriteCachePutTest.java</exclude>
               </excludes>
             </configuration>
@@ -455,7 +455,7 @@
                   <arguments>
                     <argument>-jar</argument>
                     <argument>
-                      ${project.basedir}/../badua-coverage/ba-dua-cli-0.8.0-all.jar
+                      ${project.basedir}/../badua-coverage/ba-dua-cli-0.8.1-SNAPSHOT-all.jar
                     </argument>
                     <argument>report</argument>
                     <argument>-input</argument>

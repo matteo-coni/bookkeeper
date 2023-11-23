@@ -4,18 +4,27 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
 import io.netty.buffer.UnpooledByteBufAllocator;
+import org.apache.bookkeeper.bookie.Bookie;
 import org.apache.bookkeeper.bookie.storage.ldb.entity.WriteCacheGetEntity;
+
 import org.junit.*;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mock;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.logging.log4j.core.config.ConfigurationSource;
 
 import java.util.Arrays;
 import java.util.Collection;
 
 
+
+
 @RunWith(value = Parameterized.class)
 public class WriteCacheGetTest {
 
+    private static final Logger LOG = LoggerFactory.getLogger(Bookie.class);
     private static WriteCache writeCache;
     private ByteBufAllocator byteBufAll = UnpooledByteBufAllocator.DEFAULT;
 
@@ -38,6 +47,11 @@ public class WriteCacheGetTest {
         writeCache = new WriteCache(byteBufAll, ENTRY_SIZE * ENTRY_NUMBER);
 
         writeCache.put(1, 1, this.entry);
+
+        LOG.info("ciao");
+
+
+
 
     }
 
@@ -94,8 +108,8 @@ public class WriteCacheGetTest {
             //Assert.assertFalse(expExcep);
 
         }
-        catch(Exception e){
-            e.printStackTrace();
+        catch(IllegalArgumentException ilExc){
+            ilExc.printStackTrace();
             //result = null;
             Assert.assertTrue(expExcep); //metto expRes = true in caso di eccezioni
         }
