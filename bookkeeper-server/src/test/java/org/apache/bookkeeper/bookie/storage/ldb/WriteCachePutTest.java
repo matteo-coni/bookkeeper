@@ -13,6 +13,8 @@ import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
+import org.mockito.Mockito;
+
 import static org.mockito.Mockito.mock;
 
 import java.util.Arrays;
@@ -112,7 +114,7 @@ public class WriteCachePutTest {
 
             case INVALID:
 
-                entry = mock(ByteBuf.class);
+                entry = Mockito.mock(ByteBuf.class);
                 when(entry.readableBytes()).thenThrow(new IllegalArgumentException("invalid ByteBuf"));
 
                 System.out.println("prova mock");
