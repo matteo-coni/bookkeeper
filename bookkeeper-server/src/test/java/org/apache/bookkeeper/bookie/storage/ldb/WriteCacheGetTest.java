@@ -24,7 +24,7 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class WriteCacheGetTest {
 
-    private static final Logger LOG = LoggerFactory.getLogger(Bookie.class);
+    //private static final Logger LOG = LoggerFactory.getLogger(Bookie.class);
     private static WriteCache writeCache;
     private ByteBufAllocator byteBufAll = UnpooledByteBufAllocator.DEFAULT;
 
@@ -48,7 +48,7 @@ public class WriteCacheGetTest {
 
         writeCache.put(1, 1, this.entry);
 
-        LOG.info("ciao");
+        //LOG.info("ciao");
 
 
 

@@ -454,11 +454,13 @@
               <verbose>true</verbose>
               <targetClasses>
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCache</param>
+                <param>org.apache.bookkeeper.proto.WriteEntryProcessor</param>
+
               </targetClasses>
               <targetTests>
-
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCacheGetTest</param>
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCachePutTest</param>
+                <param>org.apache.bookkeeper.proto.WriteEntryProcessorCreateTest</param>
 
               </targetTests>
             </configuration>
