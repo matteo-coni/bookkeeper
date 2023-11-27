@@ -18,11 +18,12 @@ import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.when;
 
 @RunWith(Parameterized.class)
-public class WriteEntryProcessorCreateTest {
+public class WriteEntryProcessorTest {
 
     enum instance {
         VALID,
         INVALID,
+        BOOKIE
     }
 
     private ParsedAddRequest request;
@@ -30,7 +31,7 @@ public class WriteEntryProcessorCreateTest {
     private BookieRequestProcessor processor;
     private boolean excExp;
 
-    public WriteEntryProcessorCreateTest(ParsedAddRequest request, BookieRequestHandler handler, BookieRequestProcessor processor, boolean excExp){
+    public WriteEntryProcessorTest(ParsedAddRequest request, BookieRequestHandler handler, BookieRequestProcessor processor, boolean excExp){
         this.request = request;
         this.handler = handler;
         this.processor = processor;
@@ -87,11 +88,9 @@ public class WriteEntryProcessorCreateTest {
         switch (type){
             case VALID:
                 //caso valido
-
                 return mockRequest;
             case INVALID:
                 //caso invalido
-
                 return mockRequest;
             default:
                 return null;
@@ -129,6 +128,8 @@ public class WriteEntryProcessorCreateTest {
             case INVALID:
                 //caso invalido
                 return mockProcessor;
+            case BOOKIE:
+                when(mockProcessor.getBookie()).thenReturn(bookie);
             default:
                 return null;
         }

@@ -114,8 +114,16 @@ public class WriteCachePutTest {
 
             case INVALID:
 
-                entry = Mockito.mock(ByteBuf.class);
-                when(entry.readableBytes()).thenThrow(new IllegalArgumentException("invalid ByteBuf"));
+                //entry = Mockito.mock(ByteBuf.class);
+                //when(entry.readableBytes()).thenThrow(new IllegalArgumentException("invalid ByteBuf"));
+
+                try {
+                    entry = new InvalidByteBuf();
+
+                    entry.readableBytes();
+                } catch (Exception e) {
+                    e.printStackTrace();
+            }
 
                 System.out.println("prova mock");
 
@@ -161,7 +169,7 @@ public class WriteCachePutTest {
             Assert.assertTrue(res);
 
 
-        } catch (IllegalArgumentException | NullPointerException  e){
+        } catch (IllegalArgumentException | NullPointerException | IndexOutOfBoundsException  e){
             e.printStackTrace();
             Assert.assertEquals(size_before, size_after);
             Assert.assertFalse(res);

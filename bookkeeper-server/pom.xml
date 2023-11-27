@@ -288,7 +288,7 @@
         <version>${maven-javadoc-plugin.version}</version>
         <configuration>
           <sourcepath>${src.dir}</sourcepath>
-          <!-- Avoid for missing javadoc comments to be marked as errors -->
+           <!-- Avoid for missing javadoc comments to be marked as errors -->
           <doclint>none</doclint>
           <subpackages>org.apache.bookkeeper.client:org.apache.bookkeeper.conf:org.apache.bookkeeper.feature</subpackages>
           <groups>
@@ -460,7 +460,8 @@
               <targetTests>
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCacheGetTest</param>
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCachePutTest</param>
-                <param>org.apache.bookkeeper.proto.WriteEntryProcessorCreateTest</param>
+                <param>org.apache.bookkeeper.proto.WriteEntryProcessorTest</param>
+                <param>org.apache.bookkeeper.proto.WriteEntryProcessorProcessTest</param>
 
               </targetTests>
             </configuration>

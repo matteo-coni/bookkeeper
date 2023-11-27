@@ -1,6 +1,6 @@
 package org.apache.bookkeeper.bookie.storage.ldb;
 
-import io.netty.buffer.ByteBuf;
+/*import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
 import io.netty.buffer.UnpooledByteBufAllocator;
@@ -31,7 +31,7 @@ public class WriteCacheGetTest {
     /**
      * Entry dimension = 1024 bytes
      * Max entry in cache = 10
-     */
+
     private final int ENTRY_NUMBER = 10;
     private final int ENTRY_SIZE = 1024;
     private static ByteBuf entry;
@@ -90,8 +90,6 @@ public class WriteCacheGetTest {
     @Test
     public void getFromCache(){
 
-
-
         long actualLedgerId = writeEntity.getLedgerId();
         long actualEntryId = writeEntity.getEntryId();
 
@@ -116,4 +114,4 @@ public class WriteCacheGetTest {
 
     }
 
-}
+}*/

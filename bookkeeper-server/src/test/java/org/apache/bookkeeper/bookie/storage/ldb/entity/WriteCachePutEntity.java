@@ -1,6 +1,8 @@
 package org.apache.bookkeeper.bookie.storage.ldb.entity;
 
-public class WriteCachePutEntity {
+import io.netty.buffer.ByteBuf;
+
+public class WriteCachePutEntity{
 
     private long entryId;
     private long ledgerId;
