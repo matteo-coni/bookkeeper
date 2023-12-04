@@ -333,6 +333,17 @@
       </dependencies>
       <build>
         <plugins>
+          <!--<plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.0.0-M5</version>
+            <configuration>
+              <excludes>
+                <exclude>**/WriteEntryProcessorProcessTest.java</exclude>
+                <exclude>**/WriteEntryProcessorTest.java</exclude>
+              </excludes>
+            </configuration>
+          </plugin>-->
           <!-- Copy ba-dua-agent-rt from .m2 directory to target/dependency -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
@@ -450,7 +461,7 @@
             <artifactId>pitest-maven</artifactId>
             <version>${pitest-maven-plugin.version}</version>
             <configuration>
-              <maxMutationsPerClass>5</maxMutationsPerClass>
+              <maxMutationsPerClass>50</maxMutationsPerClass>
               <verbose>true</verbose>
               <targetClasses>
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCache</param>
