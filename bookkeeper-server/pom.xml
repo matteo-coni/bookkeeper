@@ -473,6 +473,7 @@
                 <param>org.apache.bookkeeper.bookie.storage.ldb.WriteCachePutTest</param>
                 <param>org.apache.bookkeeper.proto.WriteEntryProcessorTest</param>
                 <param>org.apache.bookkeeper.proto.WriteEntryProcessorProcessTest</param>
+                <param>org.apache.bookkeeper.proto.WriteEntryImprovedTest</param>
 
               </targetTests>
             </configuration>

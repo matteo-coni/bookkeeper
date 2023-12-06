@@ -6,61 +6,43 @@ import org.apache.bookkeeper.bookie.BookieImpl;
 import org.apache.bookkeeper.stats.NullStatsLogger;
 import org.junit.Assert;
 import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
+
+import java.util.Arrays;
+import java.util.Collection;
 
 import static org.apache.bookkeeper.proto.BookieProtocol.ADDENTRY;
 import static org.mockito.Mockito.when;
 
-public class WriteEntryProcessorProcessTest {
+@RunWith(Parameterized.class)
+public class WriteEntryImprovedTest {
 
-    @Test
-    public void processPacketTest(){
+    boolean priorityBookie;
+    boolean priorityRequest;
+    public WriteEntryImprovedTest (boolean priorityBookie, boolean priorityRequest){
+        this.priorityBookie = priorityBookie;
+        this.priorityRequest = priorityRequest;
 
-        BookieProtocol.ParsedAddRequest request = Mockito.mock(BookieProtocol.ParsedAddRequest.class);
-        BookieRequestHandler handler = Mockito.mock(BookieRequestHandler.class);
-        ChannelHandlerContext ctx = Mockito.mock(ChannelHandlerContext.class);
+    }
 
-        when(handler.ctx()).thenReturn(ctx);
+    @Parameterized.Parameters
+    public static Collection<?> getParameters() {
 
-        BookieImpl bookie = Mockito.mock(BookieImpl.class);
+        return Arrays.asList(new Object[][]{
 
-        BookieRequestProcessor processor = Mockito.mock(BookieRequestProcessor.class);
-        when(processor.getBookie()).thenReturn(bookie);
+                {true, false},
+                {false, true},
+                {true, true},
+                {false, false}
 
-        WriteEntryProcessor wep =  WriteEntryProcessor.create(request, handler, processor); //costruttore privato, quindi chiamo create
-        System.out.println(wep);
-
-        //test del not read-only
-        when(bookie.isReadOnly()).thenReturn(false);
-
-        boolean res = false;
-        try{
-            wep.processPacket();
-            res = true;
-            Assert.assertTrue(res);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.assertFalse(res);
-        }
-
-        //qui entro nell'if
-        when(request.isRecoveryAdd()).thenReturn(true);
-        boolean resRec = false;
-        try{
-            wep.processPacket();
-            resRec = true;
-            Assert.assertTrue(resRec);
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-            Assert.assertFalse(resRec);
-        }
+        });
     }
 
     @Test
-    public void processPacketReadOnlyTest(){
+    public void processHighPriorityTest(){
+
         BookieProtocol.ParsedAddRequest request = Mockito.mock(BookieProtocol.ParsedAddRequest.class);
         when(request.getOpCode()).thenReturn(ADDENTRY);
         when(request.getEntryId()).thenReturn(1L);
@@ -75,25 +57,26 @@ public class WriteEntryProcessorProcessTest {
         when(channel.isActive()).thenReturn(true);
 
         when(ctx.channel()).thenReturn(channel);
-
         when(handler.ctx()).thenReturn(ctx);
 
         BookieImpl bookie = Mockito.mock(BookieImpl.class);
+        when(bookie.isReadOnly()).thenReturn(true);
 
         BookieRequestProcessor processor = Mockito.mock(BookieRequestProcessor.class);
-
         when(processor.getBookie()).thenReturn(bookie);
-
         when(processor.getRequestStats()).thenReturn(new RequestStats(NullStatsLogger.INSTANCE));
+
+        when(bookie.isAvailableForHighPriorityWrites()).thenReturn(priorityBookie);
+        when(request.isHighPriority()).thenReturn(priorityRequest);
+
+        WriteEntryProcessor wep = WriteEntryProcessor.create(request, handler, processor); //costruttore privato, quindi chiamo create
+        System.out.println(wep);
 
         when(bookie.isReadOnly()).thenReturn(true);
 
 
-        WriteEntryProcessor wep =  WriteEntryProcessor.create(request, handler, processor); //costruttore privato, quindi chiamo create
-        System.out.println(wep);
-
         boolean resRec = false;
-        try{
+        try {
             wep.processPacket();
             resRec = true;
             Assert.assertTrue(resRec);
@@ -102,6 +85,7 @@ public class WriteEntryProcessorProcessTest {
             e.printStackTrace();
             Assert.assertFalse(resRec);
         }
+
 
     }
 

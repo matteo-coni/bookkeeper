@@ -12,6 +12,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.runner.RunWith;
+import org.junit.runners.JUnit4;
 import org.junit.runners.Parameterized;
 import org.mockito.Mockito;
 
@@ -34,8 +35,10 @@ public class WriteCachePutTest {
      * Max entry in cache = 10
      */
 
-    private static final int ENTRY_NUMBER = 10;
-    private static final int ENTRY_SIZE = 1024;
+    private final static int ENTRY_NUMBER = 10;
+    private final static int ENTRY_SIZE = 1024;
+    private final static int ENTRY_SIZE_NEW = 5;
+    private final static int ENTRY_NUMBER_NEW = 1;
 
     private static ByteBuf entry;
     private WriteCachePutEntity writePutEntity;
@@ -43,7 +46,8 @@ public class WriteCachePutTest {
 
     enum entryInst {
         VALID,
-        INVALID
+        INVALID,
+        FULL
     }
 
     @Before
@@ -109,24 +113,18 @@ public class WriteCachePutTest {
             case VALID:
 
                 entry = byteBufAll.buffer(ENTRY_SIZE);
-                entry.writeBytes("ciao".getBytes());
+                entry.writeBytes("test metodo put".getBytes());
                 return entry;
 
             case INVALID:
-
-                //entry = Mockito.mock(ByteBuf.class);
-                //when(entry.readableBytes()).thenThrow(new IllegalArgumentException("invalid ByteBuf"));
-
+                //no use of mockito for error with badua
                 try {
                     entry = new InvalidByteBuf();
 
                     entry.readableBytes();
                 } catch (Exception e) {
                     e.printStackTrace();
-            }
-
-                System.out.println("prova mock");
-
+                }
                 return entry;
 
             default:
@@ -138,7 +136,7 @@ public class WriteCachePutTest {
     public void tearDown() throws Exception {
         writeCache.clear();
         if (entry != null) entry.release();
-        //writeCache.close();
+
     }
 
 
@@ -146,7 +144,6 @@ public class WriteCachePutTest {
         this.writePutEntity = writePutEntity;
         this.expRes = expRes;
         this.entry = entry;
-        //System.out.println(entry);
 
 
     }
@@ -161,7 +158,6 @@ public class WriteCachePutTest {
             size_before = writeCache.size();
             res = writeCache.put(writePutEntity.getLedgerId(), writePutEntity.getEntryId(), entry);
 
-            //System.out.println(writePutEntity.getEntryId());
             System.out.println("size dopo put: " + writeCache.size());
             size_after = writeCache.size();
 
@@ -175,5 +171,23 @@ public class WriteCachePutTest {
             Assert.assertFalse(res);
         }
 
+        boolean res_impr = true;
+        try{
+            ByteBufAllocator newByteBufAll = UnpooledByteBufAllocator.DEFAULT;
+            WriteCache newWriteCache = new WriteCache(newByteBufAll, ENTRY_SIZE_NEW * ENTRY_NUMBER_NEW);
+            ByteBuf newEntry = newByteBufAll.buffer(ENTRY_SIZE_NEW);
+            newEntry.writeBytes("test metodo put miglioramenti".getBytes());
+            res_impr = newWriteCache.put(writePutEntity.getLedgerId(),writePutEntity.getEntryId(), newEntry);
+            System.out.println("res: " + res_impr);
+            assertFalse(res_impr);
+
+
+        } catch (Exception e){
+           e.printStackTrace();
+           assertTrue(res_impr);
+
+        }
+
     }
+
 }
