@@ -417,7 +417,7 @@
       </activation>
       <properties>
         <!-- Use a stable version istead of SNAPSHOT one -->
-        <ba-dua.version>0.8.0</ba-dua.version>
+        <ba-dua.version>0.6.0</ba-dua.version>
         <argLine>-javaagent:target/dependency/ba-dua-agent-rt-${ba-dua.version}-all.jar -Doutput.file=target/badua.ser</argLine>
       </properties>
       <!-- Needed for generate the report -->
@@ -430,17 +430,7 @@
       </dependencies>
       <build>
         <plugins>
-          <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.0.0-M5</version>
-            <configuration>
-              <excludes>
-                <exclude>**/WriteEntryProcessorProcessTest.java</exclude>
-                <exclude>**/WriteEntryProcessorTest.java</exclude>
-              </excludes>
-            </configuration>
-          </plugin>
+
           <!-- Copy ba-dua-agent-rt from .m2 directory to target/dependency -->
           <plugin>
             <groupId>org.apache.maven.plugins</groupId>
