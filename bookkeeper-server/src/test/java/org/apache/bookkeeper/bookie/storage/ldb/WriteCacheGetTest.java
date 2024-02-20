@@ -24,7 +24,7 @@ import java.util.Collection;
 @RunWith(value = Parameterized.class)
 public class WriteCacheGetTest {
 
-    //private static final Logger LOG = LoggerFactory.getLogger(Bookie.class);
+
     private static WriteCache writeCache;
     private ByteBufAllocator byteBufAll = UnpooledByteBufAllocator.DEFAULT;
 
@@ -41,7 +41,7 @@ public class WriteCacheGetTest {
 
     @Before
     public void setUp() throws Exception {
-        //byteBufAll = UnpooledByteBufAllocator.DEFAULT;
+
         this.entry = byteBufAll.buffer(ENTRY_SIZE);
         this.entry.writeBytes("test prova".getBytes());
 
@@ -49,19 +49,11 @@ public class WriteCacheGetTest {
 
         writeCache.put(1, 1, this.entry);
 
-        //LOG.info("ciao");
-
-
-
-
     }
 
     @After
     public void tearDown() throws Exception {
-        //writeCache.clear();
-        //entry.release();
-        //writeCache.close();
-        //writeCache.clear();
+
         if (entry != null) entry.release();
 
     }
@@ -95,7 +87,6 @@ public class WriteCacheGetTest {
         long actualEntryId = writeEntity.getEntryId();
 
         try{
-
             ByteBuf result = writeCache.get(actualLedgerId, actualEntryId);
 
             if(result != null) {
@@ -104,12 +95,11 @@ public class WriteCacheGetTest {
             }
             else
                 Assert.assertNull(result);
-            //Assert.assertFalse(expExcep);
+
 
         }
         catch(IllegalArgumentException ilExc){
             ilExc.printStackTrace();
-            //result = null;
             Assert.assertTrue(expExcep); //metto expRes = true in caso di eccezioni
         }
 

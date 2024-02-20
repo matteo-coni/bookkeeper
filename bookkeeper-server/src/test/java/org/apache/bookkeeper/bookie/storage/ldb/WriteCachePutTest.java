@@ -50,15 +50,6 @@ public class WriteCachePutTest {
         FULL
     }
 
-    @Before
-    public void setUp() throws Exception {
-
-        //byteBufAll = UnpooledByteBufAllocator.DEFAULT;
-        //writeCache = new WriteCache(byteBufAll, ENTRY_SIZE * ENTRY_NUMBER);
-        //entry = byteBufAll.buffer(ENTRY_SIZE);
-
-    }
-
     @Parameterized.Parameters
     public static Collection<?> getParameters(){
 
